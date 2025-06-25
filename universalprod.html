@@ -3,16 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniversalProd - Control de Producción | Demo</title>
-    
-    <!-- Meta tags para SEO y redes sociales -->
-    <meta name="description" content="UniversalProd - Sistema de control de producción industrial. Demo gratuito para empresas.">
-    <meta name="keywords" content="control producción, gestión industrial, operarios, supervisor, órdenes trabajo">
-    <meta property="og:title" content="UniversalProd - Demo Control de Producción">
-    <meta property="og:description" content="Prueba nuestro sistema de control de producción durante 2 semanas">
-    <meta property="og:type" content="website">
-    
-    <!-- Estilos embebidos exactamente como el original -->
+    <title>UniversalProd - Control de Producción</title>
+
     <style>
         * {
             margin: 0;
@@ -31,28 +23,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-        }
-
-        /* DEMO BANNER */
-        .demo-banner {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            margin-bottom: 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .demo-banner h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .demo-banner p {
-            margin: 5px 0 0;
-            font-size: 0.9rem;
-            opacity: 0.9;
         }
 
         /* HEADER NAVIGATION */
@@ -160,18 +130,3152 @@
             font-size: 1.1rem;
         }
 
-        /* REST OF THE ORIGINAL STYLES */
-        /* ... [Se mantienen todos los estilos originales] ... */
+        /* OPERARIO AUTHENTICATED */
+        .operario-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .operario-info h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .operario-info p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .btn-logout {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* FORM STYLES */
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-title {
+            text-align: center;
+            color: #667eea;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-control:disabled {
+            background: #f8f9fa;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .operations-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .operations-table th,
+        .operations-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .operations-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .operations-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .input-small {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .btn-submit {
+            background: #6a9237;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(106, 146, 55, 0.4);
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(106, 146, 55, 0.6);
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ORDEN CARDS */
+        .orden-card {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .orden-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .orden-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .orden-opl {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .orden-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-working {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #cce7ff;
+            color: #004085;
+        }
+
+        .orden-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .orden-progress {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .btn-open-orden {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-open-orden:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        /* MULTIPLE OPERARIOS */
+        .operarios-container {
+            border: 2px dashed #e1e5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9ff;
+        }
+
+        .operario-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .operario-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .operario-input {
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .btn-add-operario {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-operario:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        .btn-remove-operario {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-remove-operario:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        /* SUPERVISOR VIEW */
+        .supervisor-lock {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .lock-icon {
+            font-size: 4rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .pin-input {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card.warning {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border: 2px solid #e17055;
+            box-shadow: 0 5px 15px rgba(225, 112, 85, 0.3);
+        }
+
+        .stat-card.warning .stat-number {
+            color: #d63031;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .stat-card.warning .stat-label {
+            color: #2d3436;
+            font-weight: 600;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .productions-list {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .production-item {
+            padding: 20px;
+            border-bottom: 1px solid #e1e5e9;
+            transition: background 0.3s ease;
+        }
+
+        .production-item:hover {
+            background: #f8f9ff;
+        }
+
+        .production-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .production-id {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .production-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-in-progress {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-warning {
+            background: #ffeaa7;
+            color: #d63031;
+            border: 2px solid #e17055;
+            animation: pulse 2s infinite;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(225, 112, 85, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(225, 112, 85, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(225, 112, 85, 0); }
+        }
+
+        .production-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        .progress-indicator {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: #495057;
+            margin-top: 5px;
+        }
+
+        .btn-edit {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+
+
+        /* CREAR ORDEN FORM */
+        .create-orden-section {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+        }
+
+        .create-orden-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .create-orden-form .form-control {
+            background: white;
+            border: none;
+            color: #333;
+        }
+
+        .btn-create-orden {
+            background: white;
+            color: #28a745;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            grid-column: 1 / -1;
+            justify-self: center;
+            max-width: 300px;
+        }
+
+        .btn-create-orden:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+        }
+
+        /* BACKUP SECTION */
+        .backup-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .backup-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .backup-path {
+            color: #666;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 5px;
+            flex: 1;
+        }
+
+        /* ESTILOS PARA DEBUG */
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #666;
+            padding-left: 10px;
+        }
+
+        .log-entry.success { 
+            border-left-color: #28a745; 
+            color: #00ff88;
+        }
+        
+        .log-entry.error { 
+            border-left-color: #dc3545; 
+            color: #ff6b6b; 
+        }
+        
+        .log-entry.warning { 
+            border-left-color: #ffc107; 
+            color: #ffeb3b; 
+        }
+        
+        .log-entry.system { 
+            border-left-color: #17a2b8; 
+            color: #00bcd4; 
+        }
+
+        .log-entry.info { 
+            border-left-color: #007bff; 
+            color: #00aaff; 
+        }
+
+        .log-time { 
+            color: #888; 
+            margin-right: 10px; 
+            font-weight: bold;
+        }
+        
+        .log-message { 
+            color: #00ff00; 
+        }
+        
+        .log-data { 
+            color: #87ceeb; 
+            margin-left: 20px; 
+            font-size: 11px; 
+            background: rgba(255,255,255,0.05); 
+            padding: 5px; 
+            border-radius: 3px; 
+            margin-top: 5px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .form-grid, .create-orden-form {
+                grid-template-columns: 1fr;
+            }
+
+            .operations-table {
+                font-size: 0.8rem;
+            }
+
+            .operations-table th,
+            .operations-table td {
+                padding: 10px 5px;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .operario-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .orden-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* DASHBOARD SUPERVISOR */
+        function updateDashboard() {
+            if (!supervisorAuthenticated) return;
+            
+            updateProductionsList();
+            
+            // Actualizar timestamp
+            const lastUpdateElement = document.getElementById('lastUpdate');
+            if (lastUpdateElement) {
+                lastUpdateElement.textContent = new Date().toLocaleTimeString();
+            }
+        }
+        
+        function updateProductionsList() {
+            const productionsList = document.getElementById('productionsList');
+            if (!productionsList) return;
+            
+            if (productions.length === 0) {
+                productionsList.innerHTML = `
+                    <div style="text-align: center; padding: 50px; color: #666;">
+                        <h3>📄 No hay producciones registradas</h3>
+                        <p>Las producciones aparecerán aquí cuando los operarios envíen sus partes</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const productionsHTML = productions.map(p => {
+                const orden = ordenes.find(o => o.id === p.ordenId);
+                if (!orden) return '';
+                
+                let statusClass = 'status-completed';
+                let statusText = '✅ Enviada';
+                
+                const operarios = p.operarios ? 
+                    p.operarios.map(op => `#${op.numero}`).join(', ') : 
+                    (p.operario || 'N/A');
+                
+                const descanso = (p.descansoInicio && p.descansoFin) ? 
+                    `${p.descansoInicio} - ${p.descansoFin}` : 'Sin descanso';
+                
+                return `
+                    <div class="production-item">
+                        <div class="production-header">
+                            <div class="production-id">📄 ${orden.opl} - ${p.fecha}</div>
+                            <div class="production-status ${statusClass}">${statusText}</div>
+                        </div>
+                        
+                        <div class="production-details">
+                            <div class="detail-item">
+                                <span class="detail-label">🏭 Máquina:</span>
+                                <span class="detail-value">${orden.maquina}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">🔧 Proyecto:</span>
+                                <span class="detail-value">${orden.proyecto}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">👥 Operarios:</span>
+                                <span class="detail-value">${operarios}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">🕰️ Turno:</span>
+                                <span class="detail-value">${p.turno}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">⏰ Horario:</span>
+                                <span class="detail-value">${p.horaInicio} - ${p.horaFin}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">☕ Descanso:</span>
+                                <span class="detail-value">${descanso}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">📈 Cantidad:</span>
+                                <span class="detail-value">${p.cantidadRealizada} unidades</span>
+                            </div>
+                            ${p.observaciones ? `
+                                <div class="detail-item">
+                                    <span class="detail-label">📝 Observaciones:</span>
+                                    <span class="detail-value">${p.observaciones}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div style="margin-top: 15px; text-align: right;">
+                            <button class="btn-edit" onclick="editarOrden(${p.ordenId})">✏️ Editar Orden</button>
+                        </div>
+                    </div>
+                `;
+            }).filter(html => html).join('');
+            
+            productionsList.innerHTML = productionsHTML;
+        }
+
+        /* NOTIFICATIONS */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .current-time {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .clickable-status {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .clickable-status:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .clickable-status::after {
+            content: " 👆";
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .clickable-status:hover::after {
+            opacity: 1;
+        }
+
+        /* MODAL PARA EDITAR ORDEN */
+        .edit-orden-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-orden-content {
+            background: white;
+            border-radius: 15px;
+            width: 95%;
+            max-width: 800px;
+            max-height: 95vh;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .edit-orden-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .edit-orden-body {
+            padding: 30px;
+        }
+
+        .edit-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn-save-orden {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .btn-save-orden:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel-edit {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel-edit:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+        }
+        .working-order-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .working-order-content {
+            background: white;
+            border-radius: 15px;
+            width: 95%;
+            max-width: 1000px;
+            max-height: 95vh;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .working-order-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .working-order-body {
+            padding: 30px;
+        }
     </style>
 </head>
 <body>
-    <!-- DEMO BANNER -->
-    <div class="demo-banner">
-        <h3>🚀 MODO DEMO - UniversalProd</h3>
-        <p>Versión de evaluación | Período de prueba: 2 semanas | Para consultas: contacto@tuempresa.com</p>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav">
+            <div>
+                <!-- Logo corporativo local -->
+                <img src="logo.png" alt="UniversalProd Logo" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <!-- Fallback si no se encuentra el logo -->
+                <div style="display: none; background: rgba(255,255,255,0.2); border-radius: 50%; align-items: center; justify-content: center; width: 68px; height: 68px; margin-right: 15px; font-weight: bold; color: white; font-size: 16px;">
+                    UP
+                </div>
+                <div style="display: inline-block; vertical-align: middle;">
+                    <h1 style="margin: 0; font-size: 1.5rem; font-weight: 600;">UniversalProd</h1>
+                    <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">Control de producción</p>
+                </div>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn active" onclick="showPage('operario')"><img src="icono_operario.png" alt="Operario" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;" onerror="this.style.display='none'; this.nextSibling.style.display='inline';"><span style="display: none;">👷</span> Operario</button>
+                <button class="btn" onclick="showPage('supervisor')">👔 Supervisor</button>
+                <button class="btn" onclick="showPage('logs')">🔍 Debug</button>
+                <button class="btn" onclick="resetData()" title="Limpiar todos los datos">🔄 Reset</button>
+                <div class="current-time" id="currentTime"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- El resto del HTML exactamente igual al original -->
-    <!-- ... [Todo el contenido original] ... -->
+    <div class="container">
+        <!-- PÁGINA OPERARIO -->
+        <div id="operario-page" class="page active">
+            <!-- PANTALLA DE LOGIN OPERARIO -->
+            <div id="loginSection" class="login-section">
+                <div class="login-card">
+                    <div class="login-icon">
+                        <img src="icono_operario.png" alt="Icono Operario" style="width: 128px; height: 128px; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='👷‍♂️';">
+                    </div>
+                    <h2 class="login-title">Acceso Operario</h2>
+                    <p class="login-subtitle">Ingresa tu código y selecciona la máquina</p>
+                    
+                    <form id="operarioLoginForm">
+                        <div class="form-group">
+                            <label for="operarioMaquina">🏭 Máquina de Trabajo:</label>
+                            <select class="form-control" id="operarioMaquina" required>
+                                <option value="">Seleccionar máquina...</option>
+                                <option value="Láser tubo">Láser tubo</option>
+                                <option value="Láser plano">Láser plano</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="operarioPin">🔐 PIN de Máquina:</label>
+                            <input type="password" class="form-control" id="operarioPin" placeholder="PIN de 4 dígitos" maxlength="4" required>
+                        </div>
+                        
+                        <button type="button" class="btn-submit" onclick="loginOperario()">
+                            Iniciar Sesión
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- SECCIÓN OPERARIO AUTENTICADO -->
+            <div id="operarioSection" style="display: none;">
+                <!-- HEADER DEL OPERARIO -->
+                <div class="operario-header">
+                    <div class="operario-info">
+                        <h3 id="operarioWelcome">👷‍♂️ Operario Autenticado</h3>
+                        <p id="operarioMaquinaInfo">🏭 Máquina: --</p>
+                    </div>
+                    <button class="btn-logout" onclick="logoutOperario()">
+                        🚪 Cerrar Sesión
+                    </button>
+                </div>
+
+                <!-- LISTA DE ÓRDENES DISPONIBLES -->
+                <div id="ordenesDisponibles">
+                    <div class="form-card">
+                        <h2 class="form-title">📋 ÓRDENES DISPONIBLES</h2>
+                        <div id="ordenesContainer">
+                            <!-- Las órdenes se cargarán aquí dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORMULARIO DE TRABAJO (OCULTO INICIALMENTE) -->
+                <div id="trabajarOrden" style="display: none;">
+                    <div class="working-order-modal">
+                        <div class="working-order-content">
+                            <div class="working-order-header">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <h2 id="trabajarOrdenTitle">🛠️ TRABAJANDO ORDEN</h2>
+                                    <button onclick="cerrarOrden()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer;">❌ Cerrar</button>
+                                </div>
+                            </div>
+                            
+                            <div class="working-order-body">
+                                <form id="productionForm">
+                                    <!-- DATOS DE LA ORDEN (SOLO LECTURA) -->
+                                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                                        <h3 style="color: #667eea; margin-bottom: 15px;">📋 Información de la Orden</h3>
+                                        <div class="form-grid">
+                                            <div>
+                                                <div class="form-group">
+                                                    <label>📄 N° OPL:</label>
+                                                    <input type="text" class="form-control" id="orden_opl" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>📋 Proyecto:</label>
+                                                    <input type="text" class="form-control" id="orden_proyecto" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>🏭 Máquina:</label>
+                                                    <input type="text" class="form-control" id="orden_maquina" disabled>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="form-group">
+                                                    <label>🔧 ID Pieza:</label>
+                                                    <input type="text" class="form-control" id="orden_pieza" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>🏷️ N° Lote:</label>
+                                                    <input type="text" class="form-control" id="orden_lote" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>📊 Cantidad Total:</label>
+                                                    <input type="text" class="form-control" id="orden_cantidadTotal" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="progress-indicator">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" id="orden_progressBar"></div>
+                                            </div>
+                                            <div class="progress-text" id="orden_progressText"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- DATOS DEL OPERARIO -->
+                                    <div class="form-grid">
+                                        <div>
+                                            <div class="form-group">
+                                                <label for="turno">🕐 Turno:</label>
+                                                <select class="form-control" id="turno" required>
+                                                    <option value="T-1">T-1 (Mañana)</option>
+                                                    <option value="T-2">T-2 (Tarde)</option>
+                                                    <option value="T-3">T-3 (Noche)</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cantidadRealizada">📊 Piezas Realizadas en este Turno:</label>
+                                                <input type="number" class="form-control" id="cantidadRealizada" value="0" required min="0">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <div class="form-group">
+                                                <label>👥 Operarios:</label>
+                                                <div class="operarios-container" id="operariosContainer">
+                                                    <div class="operario-row">
+                                                        <label style="width: 120px; margin-bottom: 0;">👤 Operario N°:</label>
+                                                        <input type="text" class="form-control operario-input" placeholder="Ej: 773" required>
+                                                        <button type="button" class="btn-add-operario" onclick="addOperarioField()">➕</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- CONTROL DE TIEMPO -->
+                                    <h3 style="color: #667eea; margin: 30px 0 20px 0;">⏰ Control de Tiempo</h3>
+                                    <div class="form-grid">
+                                        <div>
+                                            <div class="form-group">
+                                                <label for="horaInicio">🕐 Hora de Inicio:</label>
+                                                <input type="time" class="form-control" id="horaInicio" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="horaFin">🕕 Hora de Fin:</label>
+                                                <input type="time" class="form-control" id="horaFin" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label for="descansoInicio">☕ Inicio Descanso (opcional):</label>
+                                                <input type="time" class="form-control" id="descansoInicio">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="descansoFin">☕ Fin Descanso (opcional):</label>
+                                                <input type="time" class="form-control" id="descansoFin">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="observaciones">📝 Observaciones:</label>
+                                        <textarea class="form-control" id="observaciones" rows="3" placeholder="Comentarios sobre la producción..."></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn-submit">
+                                        🚀 Enviar a Oficinas
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL EDITAR ORDEN (SUPERVISOR) -->
+        <div id="editOrdenModal" class="edit-orden-modal">
+            <div class="edit-orden-content">
+                <div class="edit-orden-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2 id="editOrdenTitle">✏️ EDITAR ORDEN</h2>
+                        <button onclick="cerrarEditOrden()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer;">❌ Cerrar</button>
+                    </div>
+                </div>
+                
+                <div class="edit-orden-body">
+                    <form id="editOrdenForm">
+                        <div class="edit-form-grid">
+                            <div class="form-group">
+                                <label style="color: #555;">🏭 Máquina:</label>
+                                <select class="form-control" id="edit_maquina" required>
+                                    <option value="">Seleccionar máquina...</option>
+                                    <option value="Láser tubo">Láser tubo</option>
+                                    <option value="Láser plano">Láser plano</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #555;">📄 N° OPL:</label>
+                                <input type="text" class="form-control" id="edit_opl" required>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #555;">📋 Proyecto:</label>
+                                <input type="text" class="form-control" id="edit_proyecto" required>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #555;">🏷️ N° Lote:</label>
+                                <input type="text" class="form-control" id="edit_lote" required>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #555;">🔧 ID Pieza:</label>
+                                <input type="text" class="form-control" id="edit_pieza" required>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #555;">📊 Cantidad Total:</label>
+                                <input type="number" class="form-control" id="edit_cantidadTotal" required min="1">
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #555;">👁️ Visibilidad:</label>
+                                <select class="form-control" id="edit_visibilidad" required>
+                                    <option value="en_lista">📋 En Lista (Operarios la ven)</option>
+                                    <option value="en_cola">⏳ En Cola (Solo supervisores)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #555;">📋 Estado:</label>
+                                <select class="form-control" id="edit_estado" required>
+                                    <option value="pendiente">🟡 Pendiente</option>
+                                    <option value="en-proceso">🔄 En Proceso</option>
+                                    <option value="sin-completar">⏸️ Sin Completar</option>
+                                    <option value="completada">✅ Completada</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #ffc107;">
+                            <strong>⚠️ Importante:</strong> 
+                            <ul style="margin: 10px 0 0 20px; padding: 0;">
+                                <li>Los cambios se aplicarán inmediatamente</li>
+                                <li>Si hay producción registrada, ten cuidado al cambiar cantidad total</li>
+                                <li>Cambiar visibilidad afectará qué ven los operarios</li>
+                            </ul>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 30px;">
+                            <button type="submit" class="btn-save-orden">💾 Guardar Cambios</button>
+                            <button type="button" class="btn-cancel-edit" onclick="cerrarEditOrden()">❌ Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA SUPERVISOR -->
+        <div id="supervisor" class="page">
+            <!-- PANTALLA DE AUTENTICACIÓN -->
+            <div id="supervisorLock" class="supervisor-lock">
+                <div class="form-card">
+                    <div class="lock-icon">🔒</div>
+                    <h2 style="color: #122752; margin-bottom: 20px;">Acceso Supervisor</h2>
+                    <p style="color: #666; margin-bottom: 30px;">Ingresa el PIN para acceder al panel de supervisión</p>
+                    <input type="password" class="pin-input" id="supervisorPin" placeholder="Ingresa PIN" maxlength="20">
+                    <button class="btn-submit" onclick="checkSupervisorPin()" style="max-width: 300px; margin: 20px auto;">
+                        🔓 Acceder
+                    </button>
+                </div>
+            </div>
+
+            <!-- DASHBOARD SUPERVISOR -->
+            <div id="supervisorDashboard" style="display: none;">
+                <!-- CREAR NUEVA ORDEN -->
+                <div class="create-orden-section">
+                    <h3 style="margin: 0 0 20px 0;">➕ CREAR NUEVA ORDEN</h3>
+                    <form id="createOrdenForm" class="create-orden-form">
+                        <div class="form-group">
+                            <label style="color: white;">🏭 Máquina:</label>
+                            <select class="form-control" id="new_maquina" required>
+                                <option value="">Seleccionar máquina...</option>
+                                <option value="Láser tubo">Láser tubo</option>
+                                <option value="Láser plano">Láser plano</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: white;">📄 N° OPL:</label>
+                            <input type="text" class="form-control" id="new_opl" placeholder="Ej: OPL251070" required>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: white;">📋 Proyecto:</label>
+                            <input type="text" class="form-control" id="new_proyecto" placeholder="Ej: PR230102-NEPTUNO" required>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: white;">🏷️ N° Lote:</label>
+                            <input type="text" class="form-control" id="new_lote" placeholder="Ej: L240820" required>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: white;">🔧 ID Pieza:</label>
+                            <input type="text" class="form-control" id="new_pieza" placeholder="Ej: 23095008-01" required>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: white;">📊 Cantidad Total:</label>
+                            <input type="number" class="form-control" id="new_cantidadTotal" placeholder="Ej: 1800" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: white;">👁️ Visibilidad:</label>
+                            <select class="form-control" id="new_visibilidad" required>
+                                <option value="en_lista">📋 En Lista (Operarios la ven)</option>
+                                <option value="en_cola">⏳ En Cola (Solo supervisores)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-create-orden">
+                            ✨ Crear Orden
+                        </button>
+                    </form>
+                </div>
+
+                <!-- BACKUP SECTION -->
+                <div class="backup-section">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">💾 Sistema de Backup</h3>
+                    <div class="backup-status">
+                        <button class="btn" onclick="selectBackupFolder()" style="background: #28a745;">📁 Seleccionar Carpeta</button>
+                        <div class="backup-path" id="backupPath">No se ha seleccionado carpeta de backup</div>
+                        <button class="btn" onclick="createBackup()" style="background: #007bff;">💾 Crear Backup</button>
+                        <button class="btn" onclick="autoBackupToggle()" id="autoBackupBtn" style="background: #6c757d;">🔄 Auto: OFF</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-header">
+                    <div>
+                        <h2 style="color: #667eea;">📊 Dashboard Producción</h2>
+                        <button class="btn" onclick="logoutSupervisor()" style="background: #dc3545; margin-top: 10px;">🚪 Cerrar Sesión</button>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="color: #666; font-size: 0.9rem;">Última actualización: <span id="lastUpdate"></span></div>
+                        <div style="color: #888; font-size: 0.8rem; margin-top: 5px;">
+                            💡 Tip: Click derecho en los estados para cambiar
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalOrdenes">0</div>
+                        <div class="stat-label">📋 Total Órdenes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="ordenesPendientes">0</div>
+                        <div class="stat-label">🟡 Pendientes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="ordenesEnProceso">0</div>
+                        <div class="stat-label">🔄 En Proceso</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="ordenesSinCompletar">0</div>
+                        <div class="stat-label">⏸️ Sin Completar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="ordenesCompletas">0</div>
+                        <div class="stat-label">✅ Completadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="ordenesEnLista">0</div>
+                        <div class="stat-label">📋 En Lista</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="ordenesEnCola">0</div>
+                        <div class="stat-label">⏳ En Cola</div>
+                    </div>
+                </div>
+
+                <div class="productions-list" id="productionsList">
+                    <!-- Las producciones se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA DEBUG/LOGS -->
+        <div id="logs" class="page">
+            <div class="form-card">
+                <h2 class="form-title">🔍 Panel de Debug</h2>
+                
+                <div class="dashboard-header">
+                    <div>
+                        <h3 style="color: #667eea; margin: 0;">📊 Estadísticas de Debug</h3>
+                        <div style="color: #666; font-size: 0.9rem; margin-top: 8px;">
+                            📊 Total logs: <span id="totalLogs">0</span> | 
+                            🕐 Último: <span id="lastLogTime">--:--:--</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn" onclick="clearLogs()" title="Limpiar todos los logs" style="background: #dc3545;">🗑️ Limpiar</button>
+                        <button class="btn" onclick="exportLogs()" title="Exportar logs a archivo" style="background: #28a745;">📄 Exportar</button>
+                        <button class="btn" id="autoScrollBtn" onclick="toggleAutoScroll()" title="Toggle auto scroll" style="background: #17a2b8;">📜 Auto Scroll: ON</button>
+                        <button class="btn" onclick="testLogs()" title="Generar logs de prueba" style="background: #ff6b6b;">🧪 Test Logs</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px; padding: 15px; background: #e3f2fd; border-radius: 8px; color: #0d47a1;">
+                    <strong>ℹ️ Información del Panel Debug:</strong><br>
+                    • Los logs se actualizan en tiempo real<br>
+                    • Usa el botón Test para generar logs de ejemplo<br>
+                    • Auto Scroll mantiene el scroll al final automáticamente<br>
+                    • Máximo 100 logs para mantener el rendimiento
+                </div>
+
+                <div id="logsContent" style="
+                    background: #1a1a1a; 
+                    color: #00ff00; 
+                    font-family: 'Courier New', monospace; 
+                    padding: 20px; 
+                    border-radius: 10px; 
+                    height: 500px; 
+                    overflow-y: auto; 
+                    border: 2px solid #333;
+                    font-size: 13px;
+                    line-height: 1.4;
+                ">
+                    <div class="log-entry system">
+                        <span class="log-time">[--:--:--]</span>
+                        <span class="log-message">🔍 Panel de Debug iniciado - Los logs aparecerán aquí en tiempo real</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        /* VARIABLES DE AUTENTICACIÓN OPERARIO */
+        let operarioAuthenticated = false;
+        let operarioMaquina = '';
+        let currentRole = 'guest';
+
+        /* PINES DE MÁQUINAS */
+        const MACHINE_PINS = {
+            'Láser tubo': '0000',
+            'Láser plano': '1111'
+        };
+
+        /* SISTEMA DE AUTENTICACIÓN OPERARIO */
+        function loginOperario() {
+            const maquina = document.getElementById('operarioMaquina').value;
+            const pin = document.getElementById('operarioPin').value;
+            
+            if (!maquina || !pin) {
+                showNotification('❌ Complete todos los campos', 'error');
+                return;
+            }
+            
+            // Validar PIN de máquina
+            if (MACHINE_PINS[maquina] !== pin) {
+                showNotification('❌ PIN incorrecto para esta máquina', 'error');
+                addLog('❌ Intento de login con PIN incorrecto', { 
+                    maquina: maquina, 
+                    pinIntentado: pin 
+                }, 'warning');
+                return;
+            }
+            
+            // Autenticación exitosa
+            operarioAuthenticated = true;
+            operarioMaquina = maquina;
+            currentRole = 'operario';
+            
+            addLog('👷‍♂️ Operario autenticado exitosamente', { 
+                maquina: maquina 
+            }, 'success');
+            
+            showNotification(`✅ Acceso concedido - ${maquina}`, 'success');
+            
+            // Actualizar UI
+            document.getElementById('operarioWelcome').textContent = `👷‍♂️ Operario - ${maquina}`;
+            document.getElementById('operarioMaquinaInfo').textContent = `🏭 Máquina: ${maquina}`;
+            
+            // Mostrar sección autenticada y ocultar login
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('operarioSection').style.display = 'block';
+            
+            // Actualizar pestañas según el rol
+            updateNavTabs();
+            
+            // Cargar órdenes de la máquina
+            updateOrdenesDisponibles();
+        }
+
+        /* CERRAR SESIÓN OPERARIO */
+        function logoutOperario() {
+            if (confirm('¿Cerrar sesión de operario?')) {
+                operarioAuthenticated = false;
+                operarioMaquina = '';
+                currentRole = 'guest';
+                
+                // Limpiar formulario de login
+                document.getElementById('operarioLoginForm').reset();
+                
+                // Mostrar login y ocultar sección autenticada
+                document.getElementById('loginSection').style.display = 'block';
+                document.getElementById('operarioSection').style.display = 'none';
+                
+                // Cerrar orden si está abierta
+                if (document.getElementById('trabajarOrden').style.display === 'block') {
+                    cerrarOrden();
+                }
+                
+                // Actualizar pestañas según el rol
+                updateNavTabs();
+                
+                addLog('🚪 Operario desconectado', { maquina: operarioMaquina }, 'system');
+                showNotification('✅ Sesión cerrada correctamente');
+            }
+        }
+
+        /* SISTEMA DE DEBUG Y LOGS */
+        let debugLogs = [];
+        let autoScroll = true;
+        
+        function addLog(message, data = null, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = {
+                time: timestamp,
+                message: message,
+                data: data,
+                type: type
+            };
+            
+            if (data) console.log(`[${timestamp}] ${message}`, data);
+            else console.log(`[${timestamp}] ${message}`);
+            
+            debugLogs.push(logEntry);
+            
+            if (debugLogs.length > 100) {
+                debugLogs.shift();
+            }
+            
+            updateLogsDisplay();
+        }
+        
+        function updateLogsDisplay() {
+            const logsContent = document.getElementById('logsContent');
+            const totalLogsElement = document.getElementById('totalLogs');
+            const lastLogTimeElement = document.getElementById('lastLogTime');
+            
+            if (!logsContent) return;
+            
+            if (totalLogsElement) totalLogsElement.textContent = debugLogs.length;
+            if (lastLogTimeElement && debugLogs.length > 0) {
+                lastLogTimeElement.textContent = debugLogs[debugLogs.length - 1].time;
+            }
+            
+            if (debugLogs.length === 0) {
+                logsContent.innerHTML = `
+                    <div class="log-entry system">
+                        <span class="log-time">[--:--:--]</span>
+                        <span class="log-message">🔍 Panel de Debug iniciado - Los logs aparecerán aquí en tiempo real</span>
+                    </div>
+                `;
+                return;
+            }
+            
+            const logsHTML = debugLogs.map(log => {
+                const typeClass = log.type || 'info';
+                const dataHTML = log.data ? `<div class="log-data">${JSON.stringify(log.data, null, 2)}</div>` : '';
+                return `
+                    <div class="log-entry ${typeClass}">
+                        <span class="log-time">[${log.time}]</span>
+                        <span class="log-message">${log.message}</span>
+                        ${dataHTML}
+                    </div>
+                `;
+            }).join('');
+            
+            logsContent.innerHTML = logsHTML;
+            
+            if (autoScroll) {
+                logsContent.scrollTop = logsContent.scrollHeight;
+            }
+        }
+        
+        function clearLogs() {
+            if (confirm('¿Limpiar todos los logs de debug?')) {
+                debugLogs = [];
+                addLog('🗑️ Logs limpiados por el usuario', null, 'system');
+            }
+        }
+        
+        function exportLogs() {
+            const logsText = debugLogs.map(log => 
+                `[${log.time}] ${log.message} ${log.data ? JSON.stringify(log.data) : ''}`
+            ).join('\n');
+            
+            const blob = new Blob([logsText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `debug_logs_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            addLog('📄 Logs exportados a archivo', null, 'success');
+        }
+        
+        function toggleAutoScroll() {
+            autoScroll = !autoScroll;
+            const btn = document.getElementById('autoScrollBtn');
+            if (btn) {
+                btn.textContent = `📜 Auto Scroll: ${autoScroll ? 'ON' : 'OFF'}`;
+                btn.style.background = autoScroll ? '#17a2b8' : '#6c757d';
+            }
+            addLog(`📜 Auto scroll ${autoScroll ? 'activado' : 'desactivado'}`, null, 'system');
+        }
+
+        function testLogs() {
+            addLog('🧪 Generando logs de prueba...', null, 'warning');
+            setTimeout(() => addLog('✅ Log de éxito', { test: 'success' }, 'success'), 500);
+            setTimeout(() => addLog('❌ Log de error', { error: 'Test error' }, 'error'), 1000);
+            setTimeout(() => addLog('ℹ️ Log informativo', { info: 'Test info' }, 'info'), 1500);
+            setTimeout(() => addLog('⚠️ Log de advertencia', { warning: 'Test warning' }, 'warning'), 2000);
+            setTimeout(() => addLog('🔧 Log del sistema', { system: 'debug_panel' }, 'system'), 2500);
+        }
+
+        /* SISTEMA DE CONTROL DE PESTAÑAS SEGÚN ROLES */
+        function updateNavTabs() {
+            const operarioBtn = document.querySelector('.nav-buttons .btn[onclick="showPage(\'operario\')"]');
+            const supervisorBtn = document.querySelector('.nav-buttons .btn[onclick="showPage(\'supervisor\')"]');
+            const debugBtn = document.querySelector('.nav-buttons .btn[onclick="showPage(\'logs\')"]');
+            const resetBtn = document.querySelector('.nav-buttons .btn[onclick="resetData()"]');
+            
+            // Verificar si estamos en la página de operario y si el loginSection está visible
+            const operarioPage = document.getElementById('operario-page');
+            const loginSection = document.getElementById('loginSection');
+            const operarioSection = document.getElementById('operarioSection');
+            
+            // Verificar si estamos en la página de supervisor y si el supervisorLock está visible
+            const supervisorPage = document.getElementById('supervisor');
+            const supervisorLock = document.getElementById('supervisorLock');
+            const supervisorDashboard = document.getElementById('supervisorDashboard');
+            
+            const isOperarioPageActive = operarioPage && operarioPage.classList.contains('active');
+            const isLoginSectionVisible = loginSection && getComputedStyle(loginSection).display !== 'none';
+            const isOperarioSectionVisible = operarioSection && getComputedStyle(operarioSection).display !== 'none';
+            
+            const isSupervisorPageActive = supervisorPage && supervisorPage.classList.contains('active');
+            const isSupervisorLockVisible = supervisorLock && getComputedStyle(supervisorLock).display !== 'none';
+            const isSupervisorDashboardVisible = supervisorDashboard && getComputedStyle(supervisorDashboard).display !== 'none';
+            
+            // Si estamos en la página de operario Y vemos el login (operario no autenticado)
+            if (isOperarioPageActive && isLoginSectionVisible && !isOperarioSectionVisible) {
+                // Ocultar pestaña de operario y reset cuando está en login
+                if (operarioBtn) operarioBtn.style.display = 'none';
+                if (resetBtn) resetBtn.style.display = 'none';
+                // Mostrar solo supervisor y debug
+                if (supervisorBtn) supervisorBtn.style.display = 'block';
+                if (debugBtn) debugBtn.style.display = 'block';
+                
+                addLog('🏷️ Pestañas actualizadas: Operario en login - Solo Supervisor y Debug visibles', {
+                    isOperarioPageActive: isOperarioPageActive,
+                    isLoginSectionVisible: isLoginSectionVisible,
+                    isOperarioSectionVisible: isOperarioSectionVisible,
+                    operarioAuthenticated: operarioAuthenticated,
+                    currentRole: currentRole
+                }, 'system');
+                return;
+            }
+            
+            // Si estamos en la página de supervisor Y vemos el lock (supervisor no autenticado)
+            if (isSupervisorPageActive && isSupervisorLockVisible && !isSupervisorDashboardVisible) {
+                // Ocultar pestaña de supervisor y reset cuando está en login
+                if (supervisorBtn) supervisorBtn.style.display = 'none';
+                if (resetBtn) resetBtn.style.display = 'none';
+                // Mostrar solo operario y debug
+                if (operarioBtn) operarioBtn.style.display = 'block';
+                if (debugBtn) debugBtn.style.display = 'block';
+                
+                addLog('🏷️ Pestañas actualizadas: Supervisor en login - Solo Operario y Debug visibles', {
+                    isSupervisorPageActive: isSupervisorPageActive,
+                    isSupervisorLockVisible: isSupervisorLockVisible,
+                    isSupervisorDashboardVisible: isSupervisorDashboardVisible,
+                    supervisorAuthenticated: supervisorAuthenticated,
+                    currentRole: currentRole
+                }, 'system');
+                return;
+            }
+            
+            // Si el operario está autenticado (en su dashboard)
+            if (operarioAuthenticated && currentRole === 'operario') {
+                // Mostrar todas las pestañas
+                if (operarioBtn) operarioBtn.style.display = 'block';
+                if (supervisorBtn) supervisorBtn.style.display = 'block';
+                if (debugBtn) debugBtn.style.display = 'block';
+                if (resetBtn) resetBtn.style.display = 'block';
+                
+                addLog('🏷️ Pestañas actualizadas: Operario autenticado - Todas las pestañas visibles', {
+                    operarioAuthenticated: operarioAuthenticated,
+                    currentRole: currentRole
+                }, 'system');
+                return;
+            }
+            
+            // Si el supervisor está autenticado
+            if (supervisorAuthenticated && currentRole === 'supervisor') {
+                // Mostrar todas las pestañas excepto supervisor (ya está en su dashboard)
+                if (operarioBtn) operarioBtn.style.display = 'block';
+                if (supervisorBtn) supervisorBtn.style.display = 'none'; // Ocultar supervisor en su propio dashboard
+                if (debugBtn) debugBtn.style.display = 'block';
+                if (resetBtn) resetBtn.style.display = 'block';
+                
+                addLog('🏷️ Pestañas actualizadas: Supervisor autenticado - Supervisor oculto, resto visibles', {
+                    supervisorAuthenticated: supervisorAuthenticated,
+                    currentRole: currentRole
+                }, 'system');
+                return;
+            }
+            
+            // Estado por defecto (invitado en otras páginas)
+            if (operarioBtn) operarioBtn.style.display = 'block';
+            if (supervisorBtn) supervisorBtn.style.display = 'block';
+            if (debugBtn) debugBtn.style.display = 'block';
+            if (resetBtn) resetBtn.style.display = 'block';
+            
+            addLog('🏷️ Pestañas actualizadas: Estado invitado - Todas las pestañas visibles por defecto', {
+                currentRole: currentRole
+            }, 'system');
+        }
+
+        // Llamar a updateNavTabs inmediatamente al cargar
+        setTimeout(updateNavTabs, 500); // Delay para asegurar que el DOM esté completamente cargado
+
+        // Observer para detectar cambios en la visibilidad de las secciones
+        const observerCallback = function(mutationsList, observer) {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    // Si cambió el estilo de loginSection, operarioSection, supervisorLock o supervisorDashboard, actualizar pestañas
+                    if (mutation.target.id === 'loginSection' || 
+                        mutation.target.id === 'operarioSection' ||
+                        mutation.target.id === 'supervisorLock' ||
+                        mutation.target.id === 'supervisorDashboard') {
+                        setTimeout(updateNavTabs, 50);
+                    }
+                }
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    // Si cambió la clase de una página (active/inactive), actualizar pestañas
+                    if (mutation.target.classList.contains('page')) {
+                        setTimeout(updateNavTabs, 50);
+                    }
+                }
+            }
+        };
+
+        const observer = new MutationObserver(observerCallback);
+        
+        // Observar cambios en el DOM cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginSection = document.getElementById('loginSection');
+            const operarioSection = document.getElementById('operarioSection');
+            const operarioPage = document.getElementById('operario-page');
+            const supervisorLock = document.getElementById('supervisorLock');
+            const supervisorDashboard = document.getElementById('supervisorDashboard');
+            const supervisorPage = document.getElementById('supervisor');
+            
+            if (loginSection) {
+                observer.observe(loginSection, { attributes: true, attributeFilter: ['style'] });
+            }
+            if (operarioSection) {
+                observer.observe(operarioSection, { attributes: true, attributeFilter: ['style'] });
+            }
+            if (operarioPage) {
+                observer.observe(operarioPage, { attributes: true, attributeFilter: ['class'] });
+            }
+            if (supervisorLock) {
+                observer.observe(supervisorLock, { attributes: true, attributeFilter: ['style'] });
+            }
+            if (supervisorDashboard) {
+                observer.observe(supervisorDashboard, { attributes: true, attributeFilter: ['style'] });
+            }
+            if (supervisorPage) {
+                observer.observe(supervisorPage, { attributes: true, attributeFilter: ['class'] });
+            }
+        });
+
+        /* ACTUALIZAR ESTADO DE ORDEN DESDE DASHBOARD OPERARIO */
+        function actualizarEstadoOrden(ordenId) {
+            if (!operarioAuthenticated) {
+                showNotification('❌ Debes estar autenticado como operario', 'error');
+                return;
+            }
+            
+            const orden = ordenes.find(o => o.id === ordenId);
+            if (!orden) return;
+            
+            // No permitir cambios en órdenes pendientes
+            if (orden.estado === 'pendiente') {
+                showNotification('❌ Las órdenes pendientes solo pueden modificarse desde oficinas. Abre la orden y trabaja en ella para cambiar su estado.', 'error');
+                return;
+            }
+            
+            const selectElement = document.getElementById(`estadoOrden_${ordenId}`);
+            if (!selectElement) return;
+            
+            const nuevoEstado = selectElement.value;
+            const estadoAnterior = orden.estado;
+            
+            if (nuevoEstado === estadoAnterior) {
+                showNotification('ℹ️ El estado ya es el seleccionado', 'info');
+                return;
+            }
+            
+            // Solo permitir cambios entre en-proceso y sin-completar
+            if (!['en-proceso', 'sin-completar'].includes(nuevoEstado)) {
+                showNotification('❌ Solo puedes cambiar entre "En Proceso" y "Sin Completar"', 'error');
+                return;
+            }
+            
+            // Actualizar estado
+            orden.estado = nuevoEstado;
+            saveOrdenes();
+            
+            // Log para debugging
+            addLog('📋 Estado de orden actualizado desde dashboard operario', {
+                ordenId: ordenId,
+                opl: orden.opl,
+                estadoAnterior: estadoAnterior,
+                estadoNuevo: nuevoEstado,
+                maquina: operarioMaquina
+            }, 'info');
+            
+            // Actualizar vistas
+            updateOrdenesDisponibles();
+            
+            // Notificación con estado readable
+            const estadosTexto = {
+                'en-proceso': 'En Proceso 🔄',
+                'sin-completar': 'Sin Completar ⏸️'
+            };
+            
+            showNotification(`✅ Estado actualizado: ${orden.opl} → ${estadosTexto[nuevoEstado]}`);
+        }
+
+        /* SISTEMA DE MÚLTIPLES OPERARIOS */
+        function addOperarioField() {
+            const container = document.getElementById('operariosContainer');
+            const newRow = document.createElement('div');
+            newRow.className = 'operario-row';
+            
+            const operarioCount = container.children.length + 1;
+            
+            newRow.innerHTML = `
+                <label style="width: 120px; margin-bottom: 0;">👤 Operario N°:</label>
+                <input type="text" class="form-control operario-input" placeholder="Ej: 445">
+                <button type="button" class="btn-add-operario" onclick="addOperarioField()">➕</button>
+                <button type="button" class="btn-remove-operario" onclick="removeOperarioField(this)">❌</button>
+            `;
+            
+            container.appendChild(newRow);
+            addLog(`👥 Campo de operario añadido (${operarioCount} operarios totales)`, null, 'info');
+        }
+
+        function removeOperarioField(button) {
+            const row = button.parentElement;
+            const container = document.getElementById('operariosContainer');
+            
+            if (container.children.length > 1) {
+                row.remove();
+                updateOperarioLabels();
+                addLog(`👥 Campo de operario eliminado`, null, 'info');
+            } else {
+                showNotification('❌ Debe haber al menos un operario', 'error');
+            }
+        }
+
+        function updateOperarioLabels() {
+            const container = document.getElementById('operariosContainer');
+            const rows = container.children;
+            
+            // Todos los campos tienen la misma etiqueta
+            for (let i = 0; i < rows.length; i++) {
+                const label = rows[i].querySelector('label');
+                label.textContent = '👤 Operario N°:';
+            }
+        }
+
+        function getOperarios() {
+            const container = document.getElementById('operariosContainer');
+            const inputs = container.querySelectorAll('.operario-input');
+            const operarios = [];
+            
+            inputs.forEach((input, index) => {
+                if (input.value.trim()) {
+                    operarios.push({
+                        numero: input.value.trim(),
+                        rol: index === 0 ? 'principal' : 'colaborador' // Internamente: principal y colaboradores
+                    });
+                }
+            });
+            
+            return operarios;
+        }
+
+        /* SISTEMA DE BACKUP */
+        let backupFolderHandle = null;
+        let autoBackupEnabled = false;
+        let autoBackupInterval = null;
+
+        async function selectBackupFolder() {
+            try {
+                if ('showDirectoryPicker' in window) {
+                    backupFolderHandle = await window.showDirectoryPicker();
+                    document.getElementById('backupPath').textContent = `📁 ${backupFolderHandle.name}`;
+                    addLog('📁 Carpeta de backup seleccionada', { folderName: backupFolderHandle.name }, 'success');
+                    showNotification('✅ Carpeta de backup configurada correctamente');
+                } else {
+                    showNotification('❌ Tu navegador no soporta selección de carpetas. Usa Chrome/Edge', 'error');
+                    addLog('❌ File System Access API no soportada', null, 'error');
+                }
+            } catch (error) {
+                addLog('❌ Error al seleccionar carpeta:', { error: error.message }, 'error');
+                showNotification('❌ Error al seleccionar carpeta', 'error');
+            }
+        }
+
+        async function createBackup() {
+            if (!backupFolderHandle) {
+                showNotification('❌ Primero selecciona una carpeta de backup', 'error');
+                return;
+            }
+
+            try {
+                const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+                
+                // Crear backup JSON
+                const jsonData = {
+                    timestamp: new Date().toISOString(),
+                    version: "2.0",
+                    ordenes: ordenes,
+                    productions: productions,
+                    stats: {
+                        totalOrdenes: ordenes.length,
+                        totalProductions: productions.length
+                    }
+                };
+
+                const jsonFileHandle = await backupFolderHandle.getFileHandle(`backup_${timestamp}.json`, { create: true });
+                const jsonWritable = await jsonFileHandle.createWritable();
+                await jsonWritable.write(JSON.stringify(jsonData, null, 2));
+                await jsonWritable.close();
+
+                // Crear backup Excel (CSV)
+                const csvHeader = 'Tipo,OPL,Proyecto,Maquina,Lote,Pieza,CantidadTotal,CantidadRealizada,Operarios,Turno,Estado,Fecha,Observaciones\n';
+                const csvRows = [];
+                
+                // Añadir órdenes
+                ordenes.forEach(orden => {
+                    csvRows.push(`"Orden","${orden.opl}","${orden.proyecto}","${orden.maquina}","${orden.lote}","${orden.pieza}",${orden.cantidadTotal},${orden.cantidadRealizada},"","","${orden.estado}","${orden.fechaCreacion}",""`);
+                });
+                
+                // Añadir producciones
+                productions.forEach(p => {
+                    const operarios = p.operarios ? p.operarios.map(op => op.numero).join(';') : p.operario || '';
+                    csvRows.push(`"Produccion","${p.opl}","${p.proyecto}","${p.maquina}","${p.lote}","${p.pieza}",${p.cantidadTotal || 0},${p.cantidadRealizada || 0},"${operarios}","${p.turno}","${p.status}","${p.fecha}","${p.observaciones || ''}"`);
+                });
+
+                const csvContent = csvHeader + csvRows.join('\n');
+                const csvFileHandle = await backupFolderHandle.getFileHandle(`backup_${timestamp}.csv`, { create: true });
+                const csvWritable = await csvFileHandle.createWritable();
+                await csvWritable.write(csvContent);
+                await csvWritable.close();
+
+                addLog('💾 Backup creado exitosamente', { 
+                    timestamp: timestamp,
+                    files: [`backup_${timestamp}.json`, `backup_${timestamp}.csv`],
+                    ordenes: ordenes.length,
+                    productions: productions.length
+                }, 'success');
+                
+                showNotification(`✅ Backup creado: ${ordenes.length} órdenes, ${productions.length} producciones`);
+
+            } catch (error) {
+                addLog('❌ Error al crear backup:', { error: error.message }, 'error');
+                showNotification('❌ Error al crear backup', 'error');
+            }
+        }
+
+        function autoBackupToggle() {
+            autoBackupEnabled = !autoBackupEnabled;
+            const btn = document.getElementById('autoBackupBtn');
+            
+            if (autoBackupEnabled) {
+                btn.textContent = '🔄 Auto: ON';
+                btn.style.background = '#28a745';
+                autoBackupInterval = setInterval(createBackup, 3600000);
+                addLog('🔄 Auto-backup activado (cada hora)', null, 'system');
+            } else {
+                btn.textContent = '🔄 Auto: OFF';
+                btn.style.background = '#6c757d';
+                if (autoBackupInterval) {
+                    clearInterval(autoBackupInterval);
+                    autoBackupInterval = null;
+                }
+                addLog('🔄 Auto-backup desactivado', null, 'system');
+            }
+        }
+
+
+
+        /* SISTEMA DE AUTENTICACIÓN SUPERVISOR */
+        let supervisorAuthenticated = false;
+        const SUPERVISOR_PIN = 'uniprod25';
+
+        function checkSupervisorPin() {
+            const pinInput = document.getElementById('supervisorPin');
+            const enteredPin = pinInput.value;
+
+            if (enteredPin === SUPERVISOR_PIN) {
+                supervisorAuthenticated = true;
+                currentRole = 'supervisor';
+                document.getElementById('supervisorLock').style.display = 'none';
+                document.getElementById('supervisorDashboard').style.display = 'block';
+                
+                // Actualizar pestañas según el rol
+                updateNavTabs();
+                
+                addLog('🔓 Supervisor autenticado exitosamente', null, 'system');
+                updateDashboard();
+                showNotification('✅ Acceso supervisor concedido');
+            } else {
+                addLog('❌ Intento de acceso supervisor fallido', null, 'warning');
+                showNotification('❌ PIN incorrecto', 'error');
+                pinInput.value = '';
+                pinInput.focus();
+                addLog('❌ Intento de acceso supervisor fallido', null, 'warning');
+                showNotification('❌ PIN incorrecto', 'error');
+                pinInput.value = '';
+                pinInput.focus();
+            }
+        }
+
+        function logoutSupervisor() {
+            supervisorAuthenticated = false;
+            currentRole = 'guest';
+            document.getElementById('supervisorLock').style.display = 'block';
+            document.getElementById('supervisorDashboard').style.display = 'none';
+            document.getElementById('supervisorPin').value = '';
+            
+            // Actualizar pestañas según el rol
+            updateNavTabs();
+            
+            addLog('🚪 Supervisor desconectado', null, 'system');
+            showNotification('✅ Sesión supervisor cerrada');
+        }
+
+        /* SISTEMA DE ÓRDENES Y PRODUCCIONES */
+        let ordenes = JSON.parse(localStorage.getItem('ordenes')) || [];
+        let productions = JSON.parse(localStorage.getItem('productions')) || [];
+        let currentOrden = null;
+
+        // MIGRAR DATOS ANTIGUOS AUTOMÁTICAMENTE
+        function migrarDatosAntiguos() {
+            let cambiosRealizados = false;
+            
+            // Migrar órdenes
+            ordenes.forEach(orden => {
+                if (orden.maquina === 'Laser Chapa') {
+                    orden.maquina = 'Láser plano';
+                    cambiosRealizados = true;
+                }
+                if (orden.maquina === 'Laser Tubo') {
+                    orden.maquina = 'Láser tubo';
+                    cambiosRealizados = true;
+                }
+            });
+            
+            // Migrar producciones
+            productions.forEach(production => {
+                if (production.maquina === 'Laser Chapa') {
+                    production.maquina = 'Láser plano';
+                    cambiosRealizados = true;
+                }
+                if (production.maquina === 'Laser Tubo') {
+                    production.maquina = 'Láser tubo';
+                    cambiosRealizados = true;
+                }
+            });
+            
+            if (cambiosRealizados) {
+                saveOrdenes();
+                saveProductions();
+                addLog('🔄 Datos migrados automáticamente a nueva nomenclatura', { 
+                    ordenesMigradas: ordenes.length,
+                    produccionesMigradas: productions.length 
+                }, 'system');
+            }
+        }
+        // Ejecutar migración automática al cargar
+        migrarDatosAntiguos();
+        
+        // INICIALIZAR CON DATOS DE EJEMPLO SI ESTÁ VACÍO
+        if (ordenes.length === 0) {
+            ordenes = [
+                {
+                    id: 1,
+                    maquina: 'Láser plano',
+                    opl: 'OPL251068',
+                    proyecto: 'PR230100-LE THOR',
+                    lote: 'L240815',
+                    pieza: '23095006-02',
+                    cantidadTotal: 2160,
+                    cantidadRealizada: 1890,
+                    estado: 'en-proceso', // pendiente, en-proceso, completada
+                    visibilidad: 'en_lista', // en_lista, en_cola
+                    fechaCreacion: new Date().toLocaleDateString()
+                },
+                {
+                    id: 2,
+                    maquina: 'Láser tubo',
+                    opl: 'OPL251069',
+                    proyecto: 'PR230101-VULCANO',
+                    lote: 'L240816',
+                    pieza: '23095007-01',
+                    cantidadTotal: 1500,
+                    cantidadRealizada: 0,
+                    estado: 'pendiente',
+                    visibilidad: 'en_lista',
+                    fechaCreacion: new Date().toLocaleDateString()
+                },
+                {
+                    id: 3,
+                    maquina: 'Láser plano',
+                    opl: 'OPL251070',
+                    proyecto: 'PR230102-POSEIDON',
+                    lote: 'L240817',
+                    pieza: '23095008-03',
+                    cantidadTotal: 800,
+                    cantidadRealizada: 0,
+                    estado: 'pendiente',
+                    visibilidad: 'en_cola',
+                    fechaCreacion: new Date().toLocaleDateString()
+                }
+            ];
+            saveOrdenes();
+        }
+
+        function saveOrdenes() {
+            try {
+                localStorage.setItem('ordenes', JSON.stringify(ordenes));
+                addLog('💾 Órdenes guardadas exitosamente', { count: ordenes.length }, 'success');
+            } catch (error) {
+                addLog('❌ Error al guardar órdenes:', { error: error.message }, 'error');
+            }
+        }
+
+        function saveProductions() {
+            try {
+                localStorage.setItem('productions', JSON.stringify(productions));
+                addLog('💾 Productions guardadas exitosamente', { count: productions.length }, 'success');
+            } catch (error) {
+                addLog('❌ Error al guardar productions:', { error: error.message }, 'error');
+            }
+        }
+
+        // EDITAR ORDEN (SUPERVISOR)
+        document.addEventListener('DOMContentLoaded', function() {
+            const editForm = document.getElementById('editOrdenForm');
+            if (editForm) {
+                editForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (!supervisorAuthenticated || !window.currentEditingOrdenId) return;
+                    
+                    const orden = ordenes.find(o => o.id === window.currentEditingOrdenId);
+                    if (!orden) {
+                        showNotification('❌ Error: Orden no encontrada', 'error');
+                        return;
+                    }
+                    
+                    // Capturar valores antiguos para comparación
+                    const valoresAntiguos = {
+                        maquina: orden.maquina,
+                        opl: orden.opl,
+                        proyecto: orden.proyecto,
+                        lote: orden.lote,
+                        pieza: orden.pieza,
+                        cantidadTotal: orden.cantidadTotal,
+                        visibilidad: orden.visibilidad,
+                        estado: orden.estado
+                    };
+                    
+                    // Actualizar orden con nuevos valores
+                    orden.maquina = document.getElementById('edit_maquina').value;
+                    orden.opl = document.getElementById('edit_opl').value;
+                    orden.proyecto = document.getElementById('edit_proyecto').value;
+                    orden.lote = document.getElementById('edit_lote').value;
+                    orden.pieza = document.getElementById('edit_pieza').value;
+                    orden.cantidadTotal = parseInt(document.getElementById('edit_cantidadTotal').value);
+                    orden.visibilidad = document.getElementById('edit_visibilidad').value;
+                    orden.estado = document.getElementById('edit_estado').value;
+                    
+                    // Detectar cambios significativos
+                    const cambios = [];
+                    if (valoresAntiguos.maquina !== orden.maquina) cambios.push(`Máquina: ${valoresAntiguos.maquina} → ${orden.maquina}`);
+                    if (valoresAntiguos.opl !== orden.opl) cambios.push(`OPL: ${valoresAntiguos.opl} → ${orden.opl}`);
+                    if (valoresAntiguos.proyecto !== orden.proyecto) cambios.push(`Proyecto: ${valoresAntiguos.proyecto} → ${orden.proyecto}`);
+                    if (valoresAntiguos.lote !== orden.lote) cambios.push(`Lote: ${valoresAntiguos.lote} → ${orden.lote}`);
+                    if (valoresAntiguos.pieza !== orden.pieza) cambios.push(`Pieza: ${valoresAntiguos.pieza} → ${orden.pieza}`);
+                    if (valoresAntiguos.cantidadTotal !== orden.cantidadTotal) cambios.push(`Cantidad: ${valoresAntiguos.cantidadTotal} → ${orden.cantidadTotal}`);
+                    if (valoresAntiguos.visibilidad !== orden.visibilidad) cambios.push(`Visibilidad: ${valoresAntiguos.visibilidad} → ${orden.visibilidad}`);
+                    if (valoresAntiguos.estado !== orden.estado) cambios.push(`Estado: ${valoresAntiguos.estado} → ${orden.estado}`);
+                    
+                    if (cambios.length === 0) {
+                        showNotification('ℹ️ No se detectaron cambios', 'info');
+                        cerrarEditOrden();
+                        return;
+                    }
+                    
+                    // Guardar cambios
+                    saveOrdenes();
+                    
+                    // Log detallado de cambios
+                    addLog('✏️ Orden editada exitosamente', {
+                        ordenId: window.currentEditingOrdenId,
+                        opl: orden.opl,
+                        cambios: cambios,
+                        valoresAntiguos: valoresAntiguos,
+                        valoresNuevos: {
+                            maquina: orden.maquina,
+                            opl: orden.opl,
+                            proyecto: orden.proyecto,
+                            lote: orden.lote,
+                            pieza: orden.pieza,
+                            cantidadTotal: orden.cantidadTotal,
+                            visibilidad: orden.visibilidad,
+                            estado: orden.estado
+                        }
+                    }, 'success');
+                    
+                    // Mostrar resumen de cambios
+                    const resumenCambios = `✅ ORDEN EDITADA CORRECTAMENTE\n\n` +
+                        `📋 Orden: ${orden.opl}\n\n` +
+                        `🔄 Cambios realizados:\n` +
+                        cambios.map(cambio => `• ${cambio}`).join('\n') +
+                        `\n\nLos cambios se han aplicado inmediatamente.`;
+                    
+                    alert(resumenCambios);
+                    showNotification(`✅ Orden ${orden.opl} editada: ${cambios.length} cambio(s)`);
+                    
+                    // Actualizar vistas
+                    updateDashboard();
+                    if (operarioAuthenticated) updateOrdenesDisponibles();
+                    
+                    // Cerrar modal
+                    cerrarEditOrden();
+                });
+            }
+        });
+
+        // CREAR NUEVA ORDEN (SUPERVISOR)
+        document.addEventListener('DOMContentLoaded', function() {
+            const createForm = document.getElementById('createOrdenForm');
+            if (createForm) {
+                createForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    if (!supervisorAuthenticated) return;
+                    
+                    const nuevaOrden = {
+                        id: Date.now(),
+                        maquina: document.getElementById('new_maquina').value,
+                        opl: document.getElementById('new_opl').value,
+                        proyecto: document.getElementById('new_proyecto').value,
+                        lote: document.getElementById('new_lote').value,
+                        pieza: document.getElementById('new_pieza').value,
+                        cantidadTotal: parseInt(document.getElementById('new_cantidadTotal').value),
+                        cantidadRealizada: 0,
+                        estado: 'pendiente', // Siempre empieza como pendiente
+                        visibilidad: document.getElementById('new_visibilidad').value,
+                        fechaCreacion: new Date().toLocaleDateString()
+                    };
+                    
+                    ordenes.push(nuevaOrden);
+                    saveOrdenes();
+                    
+                    addLog('✨ Nueva orden creada', nuevaOrden, 'success');
+                    showNotification(`✅ Orden ${nuevaOrden.opl} creada para ${nuevaOrden.maquina}`);
+                    
+                    // Limpiar formulario
+                    createForm.reset();
+                    
+                    updateDashboard();
+                    if (operarioAuthenticated) updateOrdenesDisponibles();
+                });
+            }
+        });
+
+        // MOSTRAR ÓRDENES DISPONIBLES (OPERARIO)
+        function updateOrdenesDisponibles() {
+            const container = document.getElementById('ordenesContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            // Solo mostrar si está autenticado como operario
+            if (!operarioAuthenticated) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 50px; color: #666;">
+                        <h3>🔐 Acceso Requerido</h3>
+                        <p>Debes autenticarte como operario para ver las órdenes disponibles</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Solo mostrar órdenes de la máquina del operario con visibilidad "en_lista" y que no estén completadas
+            const ordenesDisponibles = ordenes.filter(orden => 
+                orden.maquina === operarioMaquina && 
+                orden.visibilidad === 'en_lista' && 
+                orden.estado !== 'completada'
+            );
+            
+            if (ordenesDisponibles.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 50px; color: #666;">
+                        <h3>📭 No hay órdenes disponibles</h3>
+                        <p>No hay órdenes disponibles para <strong>${operarioMaquina}</strong></p>
+                        <p>Espera a que un supervisor active nuevas órdenes de trabajo</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            ordenesDisponibles.forEach(orden => {
+                const progreso = orden.cantidadTotal > 0 ? Math.round((orden.cantidadRealizada / orden.cantidadTotal) * 100) : 0;
+                const restantes = Math.max(0, orden.cantidadTotal - orden.cantidadRealizada);
+                
+                let statusClass = 'status-available';
+                let statusText = '🟡 Pendiente';
+                
+                if (orden.estado === 'en-proceso') {
+                    statusClass = 'status-working';
+                    statusText = '🔄 En Proceso';
+                } else if (orden.estado === 'sin-completar') {
+                    statusClass = 'status-working';
+                    statusText = '⏸️ Sin Completar';
+                } else if (orden.estado === 'completada') {
+                    statusClass = 'status-completed';
+                    statusText = '✅ Completada';
+                }
+                
+                const ordenCard = document.createElement('div');
+                ordenCard.className = 'orden-card';
+                ordenCard.innerHTML = `
+                    <div class="orden-header">
+                        <div class="orden-opl">📋 ${orden.opl}</div>
+                        <div class="orden-status ${statusClass}">${statusText}</div>
+                    </div>
+                    
+                    <div class="orden-details">
+                        <div>
+                            <strong>📋 Proyecto:</strong> ${orden.proyecto}<br>
+                            <strong>🏭 Máquina:</strong> ${orden.maquina}<br>
+                            <strong>🔧 Pieza:</strong> ${orden.pieza}
+                        </div>
+                        <div>
+                            <strong>🏷️ Lote:</strong> ${orden.lote}<br>
+                            <strong>📊 Realizadas:</strong> ${orden.cantidadRealizada}<br>
+                            <strong>📊 Total:</strong> ${orden.cantidadTotal}
+                        </div>
+                    </div>
+                    
+                    <div class="orden-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${Math.min(100, progreso)}%"></div>
+                        </div>
+                        <div class="progress-text">
+                            ${orden.cantidadRealizada}/${orden.cantidadTotal} 
+                            ${restantes > 0 ? `(faltan ${restantes})` : orden.cantidadRealizada > orden.cantidadTotal ? '(sobrepasado)' : '(completado)'}
+                        </div>
+                    </div>
+                    
+                    <!-- CONTROL DE ESTADO -->
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <label style="font-weight: 600; color: #555; margin: 0;">📋 Estado de la Orden:</label>
+                            ${orden.estado === 'pendiente' ? `
+                                <div style="background: #fff3cd; color: #856404; padding: 8px 16px; border-radius: 20px; font-weight: 600; border: 2px solid #ffc107;">
+                                    🟡 Pendiente (Abre la orden para empezar a trabajar)
+                                </div>
+                            ` : `
+                                <select class="form-control" id="estadoOrden_${orden.id}" style="max-width: 200px; margin: 0;">
+                                    <option value="en-proceso" ${orden.estado === 'en-proceso' ? 'selected' : ''}>🔄 En Proceso</option>
+                                    <option value="sin-completar" ${orden.estado === 'sin-completar' ? 'selected' : ''}>⏸️ Sin Completar</option>
+                                </select>
+                                <button onclick="actualizarEstadoOrden(${orden.id})" style="background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 600;">
+                                    ✅ Actualizar Estado
+                                </button>
+                            `}
+                        </div>
+                        ${orden.estado === 'pendiente' ? `
+                            <div style="font-size: 0.8rem; color: #666; margin-top: 8px;">
+                                💡 Las órdenes pendientes solo pueden ser modificadas por oficinas hasta que se trabajen por primera vez
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <button class="btn-open-orden" onclick="abrirOrden(${orden.id})">
+                        🚀 Abrir Orden
+                    </button>
+                `;
+                
+                container.appendChild(ordenCard);
+            });
+        }
+
+        // ABRIR ORDEN PARA TRABAJAR
+        function abrirOrden(ordenId) {
+            if (!operarioAuthenticated) {
+                showNotification('❌ Debes estar autenticado como operario', 'error');
+                return;
+            }
+            
+            const orden = ordenes.find(o => o.id === ordenId);
+            if (!orden) return;
+            
+            // Verificar que la orden es de la máquina del operario
+            if (orden.maquina !== operarioMaquina) {
+                showNotification('❌ Esta orden no corresponde a tu máquina', 'error');
+                return;
+            }
+            
+            currentOrden = orden;
+            
+            // Llenar datos de la orden
+            document.getElementById('orden_opl').value = orden.opl;
+            document.getElementById('orden_proyecto').value = orden.proyecto;
+            document.getElementById('orden_maquina').value = orden.maquina;
+            document.getElementById('orden_pieza').value = orden.pieza;
+            document.getElementById('orden_lote').value = orden.lote;
+            document.getElementById('orden_cantidadTotal').value = orden.cantidadTotal;
+            
+            // Actualizar progreso
+            const progreso = orden.cantidadTotal > 0 ? Math.round((orden.cantidadRealizada / orden.cantidadTotal) * 100) : 0;
+            const restantes = Math.max(0, orden.cantidadTotal - orden.cantidadRealizada);
+            
+            document.getElementById('orden_progressBar').style.width = `${Math.min(100, progreso)}%`;
+            document.getElementById('orden_progressText').textContent = 
+                `${orden.cantidadRealizada}/${orden.cantidadTotal} ${restantes > 0 ? `(faltan ${restantes})` : orden.cantidadRealizada > orden.cantidadTotal ? '(sobrepasado)' : '(completado)'}`;
+            
+            // Limpiar campos de hora para que el operario los rellene manualmente
+            document.getElementById('horaInicio').value = '00:00';
+            document.getElementById('horaFin').value = '00:00';
+            document.getElementById('descansoInicio').value = '';
+            document.getElementById('descansoFin').value = '';
+            
+            document.getElementById('trabajarOrdenTitle').textContent = `🛠️ TRABAJANDO: ${orden.opl}`;
+            
+            // Mostrar modal
+            document.getElementById('ordenesDisponibles').style.display = 'none';
+            document.getElementById('trabajarOrden').style.display = 'block';
+            
+            addLog('🛠️ Orden abierta para trabajo', { 
+                ordenId: ordenId, 
+                opl: orden.opl, 
+                maquina: operarioMaquina 
+            }, 'info');
+        }
+
+        // CERRAR ORDEN SIN ENVIAR
+        function cerrarOrden() {
+            currentOrden = null;
+            document.getElementById('ordenesDisponibles').style.display = 'block';
+            document.getElementById('trabajarOrden').style.display = 'none';
+            
+            // Limpiar formulario
+            document.getElementById('productionForm').reset();
+            const container = document.getElementById('operariosContainer');
+            while (container.children.length > 1) {
+                container.removeChild(container.lastChild);
+            }
+            
+            // Limpiar primer campo de operario
+            const firstOperarioInput = container.querySelector('.operario-input');
+            if (firstOperarioInput) {
+                firstOperarioInput.value = '';
+            }
+            
+            // Limpiar campos de tiempo manualmente 
+            document.getElementById('horaInicio').value = '00:00';
+            document.getElementById('horaFin').value = '00:00';
+            document.getElementById('descansoInicio').value = '';
+            document.getElementById('descansoFin').value = '';
+            
+            addLog('❌ Orden cerrada sin enviar', { maquina: operarioMaquina }, 'warning');
+            updateOrdenesDisponibles();
+        }
+
+        // ENVIAR PRODUCCIÓN
+        document.addEventListener('DOMContentLoaded', function() {
+            const productionForm = document.getElementById('productionForm');
+            if (productionForm) {
+                productionForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    if (!currentOrden) {
+                        showNotification('❌ No hay orden activa', 'error');
+                        return;
+                    }
+                    
+                    if (!operarioAuthenticated) {
+                        showNotification('❌ Debes estar autenticado como operario', 'error');
+                        return;
+                    }
+                    
+                    try {
+                        const operarios = getOperarios();
+                        if (operarios.length === 0) {
+                            showNotification('❌ Debe haber al menos un operario', 'error');
+                            return;
+                        }
+                        
+                        const cantidadRealizada = parseInt(document.getElementById('cantidadRealizada').value) || 0;
+                        
+                        // Capturar datos de descanso
+                        const descansoInicio = document.getElementById('descansoInicio').value;
+                        const descansoFin = document.getElementById('descansoFin').value;
+                        
+                        // Crear registro de producción
+                        const produccion = {
+                            id: Date.now(),
+                            ordenId: currentOrden.id,
+                            operarios: operarios,
+                            maquinaOperario: operarioMaquina, // Máquina del operario
+                            turno: document.getElementById('turno').value,
+                            opl: currentOrden.opl,
+                            pieza: currentOrden.pieza,
+                            proyecto: currentOrden.proyecto,
+                            maquina: currentOrden.maquina,
+                            lote: currentOrden.lote,
+                            cantidadTotal: currentOrden.cantidadTotal,
+                            cantidadRealizada: cantidadRealizada,
+                            horaInicio: document.getElementById('horaInicio').value,
+                            horaFin: document.getElementById('horaFin').value,
+                            descansoInicio: descansoInicio,
+                            descansoFin: descansoFin,
+                            fecha: new Date().toLocaleDateString(),
+                            observaciones: document.getElementById('observaciones').value,
+                            status: 'enviado'
+                        };
+                        
+                        // Actualizar cantidad en la orden
+                        currentOrden.cantidadRealizada += cantidadRealizada;
+                        
+                        // Determinar estado final
+                        if (currentOrden.cantidadRealizada >= currentOrden.cantidadTotal) {
+                            // Auto-completar si llegó al total
+                            currentOrden.estado = 'completada';
+                            produccion.status = 'completado';
+                            addLog('✅ Orden auto-completada por cantidad', { 
+                                opl: currentOrden.opl, 
+                                total: currentOrden.cantidadRealizada,
+                                maquina: operarioMaquina 
+                            }, 'success');
+                        } else {
+                            // Si era pendiente, cambiar a en-proceso automáticamente (primera vez trabajada)
+                            if (currentOrden.estado === 'pendiente') {
+                                currentOrden.estado = 'en-proceso';
+                                addLog('🔄 Orden cambiada de Pendiente a En Proceso (primera vez trabajada)', { 
+                                    opl: currentOrden.opl,
+                                    maquina: operarioMaquina 
+                                }, 'info');
+                            }
+                        }
+                        
+                        productions.push(produccion);
+                        saveProductions();
+                        saveOrdenes();
+                        
+                        addLog('🚀 Producción enviada exitosamente', produccion, 'success');
+                        
+                        // MENSAJE DE CONFIRMACIÓN
+                        const esPrimeraVez = currentOrden.cantidadRealizada === cantidadRealizada;
+                        const estadoFinal = currentOrden.estado === 'completada' ? 'COMPLETADA' : currentOrden.estado.toUpperCase().replace('-', ' ');
+                        
+                        // Formatear descanso si ambos campos están rellenados
+                        const descansoTexto = (descansoInicio && descansoFin) ? 
+                            `☕ Descanso: ${descansoInicio} - ${descansoFin}\n` : '';
+                        
+                        let mensajeConfirmacion = `✅ PRODUCCIÓN ENVIADA CORRECTAMENTE\n\n` +
+                            `📋 Orden: ${currentOrden.opl}\n` +
+                            `🏭 Máquina: ${operarioMaquina}\n` +
+                            `📊 Piezas enviadas: +${cantidadRealizada}\n` +
+                            `📊 Total acumulado: ${currentOrden.cantidadRealizada}/${currentOrden.cantidadTotal}\n` +
+                            `⏰ Horario: ${produccion.horaInicio} - ${produccion.horaFin}\n` +
+                            `${descansoTexto}` +
+                            `📋 Estado: ${estadoFinal}\n\n` +
+                            `Los datos han sido enviados a oficinas correctamente.`;
+                        
+                        if (esPrimeraVez && currentOrden.estado !== 'completada') {
+                            mensajeConfirmacion += `\n\n💡 Ahora puedes cambiar el estado entre "En Proceso" y "Sin Completar" desde el dashboard principal.`;
+                        } else if (currentOrden.estado !== 'completada') {
+                            mensajeConfirmacion += `\n\n💡 Puedes cambiar el estado de las órdenes desde el dashboard principal.`;
+                        }
+                        
+                        alert(mensajeConfirmacion);
+                        showNotification(`✅ Progreso enviado: +${cantidadRealizada} piezas`);
+                        
+                        // Cerrar orden automáticamente
+                        currentOrden = null;
+                        document.getElementById('ordenesDisponibles').style.display = 'block';
+                        document.getElementById('trabajarOrden').style.display = 'none';
+                        
+                        // Limpiar formulario
+                        productionForm.reset();
+                        const container = document.getElementById('operariosContainer');
+                        while (container.children.length > 1) {
+                            container.removeChild(container.lastChild);
+                        }
+                        
+                        // Limpiar primer campo de operario
+                        const firstOperarioInput = container.querySelector('.operario-input');
+                        if (firstOperarioInput) {
+                            firstOperarioInput.value = '';
+                        }
+                        
+                        // Limpiar campos de tiempo manualmente
+                        document.getElementById('horaInicio').value = '00:00';
+                        document.getElementById('horaFin').value = '00:00'; 
+                        document.getElementById('descansoInicio').value = '';
+                        document.getElementById('descansoFin').value = '';
+                        
+                        updateOrdenesDisponibles();
+                        
+                    } catch (error) {
+                        addLog('❌ Error al enviar producción:', { 
+                            error: error.message,
+                            maquina: operarioMaquina 
+                        }, 'error');
+                        showNotification('❌ Error al enviar producción', 'error');
+                    }
+                });
+            }
+        });
+
+        // FUNCIONES PRINCIPALES
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+            
+            const pageId = page === 'operario' ? 'operario-page' : page;
+            const targetPage = document.getElementById(pageId);
+            
+            if (targetPage) {
+                targetPage.classList.add('active');
+                addLog(`📄 Cambiando a página: ${page}`, { 
+                    pageId: pageId,
+                    operarioAuth: operarioAuthenticated,
+                    supervisorAuth: supervisorAuthenticated 
+                }, 'system');
+            }
+            
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            
+            if (page === 'operario') {
+                updateOrdenesDisponibles();
+            } else if (page === 'supervisor') {
+                if (supervisorAuthenticated) {
+                    updateDashboard();
+                }
+            } else if (page === 'logs') {
+                setTimeout(updateLogsDisplay, 100);
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            try {
+                const notification = document.getElementById('notification');
+                if (!notification) return;
+                
+                notification.textContent = message;
+                notification.style.background = type === 'success' ? '#28a745' : '#dc3545';
+                notification.classList.add('show');
+                
+                addLog(`🔔 Notificación: ${message}`, { type: type }, 'info');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            } catch (error) {
+                addLog('❌ Error en notificación:', { error: error.message }, 'error');
+                alert(message);
+            }
+        }
+
+        function updateTime() {
+            try {
+                const now = new Date();
+                const timeElement = document.getElementById('currentTime');
+                const updateElement = document.getElementById('lastUpdate');
+                
+                if (timeElement) timeElement.textContent = now.toLocaleTimeString();
+                if (updateElement) updateElement.textContent = now.toLocaleString();
+            } catch (error) {
+                console.error('Error al actualizar tiempo:', error);
+            }
+        }
+
+        // DASHBOARD SUPERVISOR
+        function updateDashboard() {
+            if (!supervisorAuthenticated) return;
+            
+            try {
+                addLog('📊 Actualizando dashboard supervisor...', null, 'info');
+                
+                const stats = {
+                    totalOrdenes: ordenes.length,
+                    pendientes: ordenes.filter(o => o.estado === 'pendiente').length,
+                    enProceso: ordenes.filter(o => o.estado === 'en-proceso').length,
+                    sinCompletar: ordenes.filter(o => o.estado === 'sin-completar').length,
+                    completadas: ordenes.filter(o => o.estado === 'completada').length,
+                    enLista: ordenes.filter(o => o.visibilidad === 'en_lista').length,
+                    enCola: ordenes.filter(o => o.visibilidad === 'en_cola').length
+                };
+                
+                document.getElementById('totalOrdenes').textContent = stats.totalOrdenes;
+                document.getElementById('ordenesPendientes').textContent = stats.pendientes;
+                document.getElementById('ordenesEnProceso').textContent = stats.enProceso;
+                document.getElementById('ordenesSinCompletar').textContent = stats.sinCompletar;
+                document.getElementById('ordenesCompletas').textContent = stats.completadas;
+                document.getElementById('ordenesEnLista').textContent = stats.enLista;
+                document.getElementById('ordenesEnCola').textContent = stats.enCola;
+                
+                // Aplicar estilo especial si hay órdenes sin completar
+                const sinCompletarCard = document.getElementById('ordenesSinCompletar').closest('.stat-card');
+                if (stats.sinCompletar > 0) {
+                    sinCompletarCard.classList.add('warning');
+                    addLog(`⚠️ ATENCIÓN: ${stats.sinCompletar} orden(es) marcada(s) como SIN COMPLETAR`, {
+                        ordenesSinCompletar: ordenes.filter(o => o.estado === 'sin-completar').map(o => ({ 
+                            opl: o.opl, 
+                            maquina: o.maquina,
+                            progreso: `${o.cantidadRealizada}/${o.cantidadTotal}`
+                        }))
+                    }, 'warning');
+                } else {
+                    sinCompletarCard.classList.remove('warning');
+                }
+                
+                updateProductionsList();
+                
+            } catch (error) {
+                addLog('❌ Error al actualizar dashboard:', { error: error.message }, 'error');
+            }
+        }
+
+        function updateProductionsList() {
+            try {
+                const container = document.getElementById('productionsList');
+                if (!container) return;
+                
+                container.innerHTML = '';
+                
+                // Mostrar órdenes y producciones combinadas
+                const allItems = [];
+                
+                // Añadir órdenes
+                ordenes.forEach(orden => {
+                    allItems.push({
+                        type: 'orden',
+                        data: orden,
+                        timestamp: new Date(orden.fechaCreacion).getTime()
+                    });
+                });
+                
+                // Añadir producciones recientes
+                productions.slice(-10).forEach(prod => {
+                    allItems.push({
+                        type: 'produccion',
+                        data: prod,
+                        timestamp: new Date(prod.fecha).getTime()
+                    });
+                });
+                
+                // Ordenar por timestamp descendente
+                allItems.sort((a, b) => b.timestamp - a.timestamp);
+                
+                allItems.forEach(item => {
+                    if (item.type === 'orden') {
+                        const orden = item.data;
+                        const progreso = orden.cantidadTotal > 0 ? Math.round((orden.cantidadRealizada / orden.cantidadTotal) * 100) : 0;
+                        
+                        let statusClass = 'status-pending';
+                        let statusText = '🟡 Pendiente';
+                        
+                        if (orden.estado === 'en-proceso') {
+                            statusClass = 'status-in-progress';
+                            statusText = '🔄 En Proceso';
+                        } else if (orden.estado === 'sin-completar') {
+                            statusClass = 'status-warning';
+                            statusText = '⏸️ Sin Completar';
+                        } else if (orden.estado === 'completada') {
+                            statusClass = 'status-completed';
+                            statusText = '✅ Completada';
+                        }
+                        
+                        // Indicador de visibilidad
+                        const visibilidadIcon = orden.visibilidad === 'en_lista' ? '📋' : '⏳';
+                        const visibilidadText = orden.visibilidad === 'en_lista' ? 'En Lista' : 'En Cola';
+                        
+                        // Estilo especial para órdenes sin completar
+                        let borderStyle = '';
+                        if (orden.estado === 'sin-completar') {
+                            borderStyle = 'border-left: 4px solid #e17055; background: linear-gradient(90deg, #ffeaa7 0%, #ffffff 15%);';
+                        } else if (orden.visibilidad === 'en_cola') {
+                            borderStyle = 'border-left: 4px solid #ffc107;';
+                        }
+                        
+                        const ordenHtml = `
+                            <div class="production-item" style="${borderStyle}">
+                                <div class="production-header">
+                                    <div class="production-id">📋 ORDEN ${orden.opl}</div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <div style="background: ${orden.visibilidad === 'en_lista' ? '#e3f2fd' : '#fff3cd'}; color: ${orden.visibilidad === 'en_lista' ? '#1976d2' : '#856404'}; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem;">
+                                            ${visibilidadIcon} ${visibilidadText}
+                                        </div>
+                                        <div class="production-status ${statusClass} clickable-status" 
+                                             oncontextmenu="changeOrdenStatus(${orden.id}, event)" 
+                                             title="Click derecho para cambiar estado">
+                                            ${statusText}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-indicator">
+                                    <div class="progress-bar" style="width: ${Math.min(100, progreso)}%"></div>
+                                    <div class="progress-text">📊 Progreso: ${orden.cantidadRealizada}/${orden.cantidadTotal} (${progreso}%)</div>
+                                </div>
+                                
+                                <div class="production-details">
+                                    <div class="detail-item">
+                                        <span class="detail-label">🏭 Máquina:</span>
+                                        <span class="detail-value">${orden.maquina}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">📋 Proyecto:</span>
+                                        <span class="detail-value">${orden.proyecto}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">🔧 Pieza:</span>
+                                        <span class="detail-value">${orden.pieza}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">🏷️ Lote:</span>
+                                        <span class="detail-value">${orden.lote}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">📅 Creada:</span>
+                                        <span class="detail-value">${orden.fechaCreacion}</span>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="btn-edit" onclick="toggleVisibilidad(${orden.id})" style="background: ${orden.visibilidad === 'en_lista' ? '#ffc107' : '#28a745'};">
+                                        ${orden.visibilidad === 'en_lista' ? '⏳ Poner en Cola' : '📋 Poner en Lista'}
+                                    </button>
+                                    <button class="btn-edit" onclick="editOrden(${orden.id})">✏️ Editar</button>
+                                    <button class="btn-edit" onclick="deleteOrden(${orden.id})" style="background: #dc3545;">🗑️ Eliminar</button>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += ordenHtml;
+                        
+                    } else {
+                        // Mostrar producción
+                        const prod = item.data;
+                        const operariosText = prod.operarios ? 
+                            prod.operarios.map(op => op.numero).join(', ') : 
+                            (prod.operario || 'No especificado');
+                        
+                        const prodHtml = `
+                            <div class="production-item" style="border-left: 4px solid #17a2b8;">
+                                <div class="production-header">
+                                    <div class="production-id">📈 PRODUCCIÓN ${prod.opl}</div>
+                                    <div class="production-status status-completed">✅ Enviada</div>
+                                </div>
+                                
+                                <div class="production-details">
+                                    <div class="detail-item">
+                                        <span class="detail-label">👥 Operarios:</span>
+                                        <span class="detail-value">${operariosText}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">🏭 Máquina:</span>
+                                        <span class="detail-value">${prod.maquinaOperario || prod.maquina}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">🕐 Turno:</span>
+                                        <span class="detail-value">${prod.turno}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">📊 Cantidad:</span>
+                                        <span class="detail-value">${prod.cantidadRealizada}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">⏰ Horario:</span>
+                                        <span class="detail-value">${prod.horaInicio || '--'} - ${prod.horaFin || '--'}</span>
+                                    </div>
+                                    ${(prod.descansoInicio && prod.descansoFin) ? `
+                                        <div class="detail-item">
+                                            <span class="detail-label">☕ Descanso:</span>
+                                            <span class="detail-value">${prod.descansoInicio} - ${prod.descansoFin}</span>
+                                        </div>
+                                    ` : ''}
+                                    <div class="detail-item">
+                                        <span class="detail-label">📅 Fecha:</span>
+                                        <span class="detail-value">${prod.fecha}</span>
+                                    </div>
+                                </div>
+                                ${prod.observaciones ? `
+                                    <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                                        <strong>📝 Observaciones:</strong> ${prod.observaciones}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                        container.innerHTML += prodHtml;
+                    }
+                });
+                
+            } catch (error) {
+                addLog('❌ Error al actualizar lista:', { error: error.message }, 'error');
+            }
+        }
+
+        function changeOrdenStatus(ordenId, event) {
+            event.preventDefault();
+            if (!supervisorAuthenticated) return;
+            
+            const orden = ordenes.find(o => o.id === ordenId);
+            if (!orden) return;
+            
+            const statusCode = prompt(
+                `🔧 CAMBIAR ESTADO DE ORDEN\n` +
+                `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+                `📋 OPL: ${orden.opl}\n` +
+                `📊 Estado actual: ${orden.estado}\n\n` +
+                `Cambiar a:\n` +
+                `┌─────────────────────────────┐\n` +
+                `│  1  =  🟡 Pendiente         │\n` +
+                `│  2  =  🔄 En Proceso        │\n` +
+                `│  3  =  ⏸️ Sin Completar     │\n` +
+                `│  4  =  ✅ Completada        │\n` +
+                `└─────────────────────────────┘\n\n` +
+                `Escribe el número (1, 2, 3 o 4):`
+            );
+            
+            const statusMap = {
+                '1': 'pendiente',
+                '2': 'en-proceso',
+                '3': 'sin-completar',
+                '4': 'completada'
+            };
+            
+            if (statusMap[statusCode]) {
+                const oldStatus = orden.estado;
+                orden.estado = statusMap[statusCode];
+                
+                saveOrdenes();
+                updateDashboard();
+                if (operarioAuthenticated) updateOrdenesDisponibles();
+                
+                showNotification(`✅ Estado cambiado: ${oldStatus} → ${orden.estado}`);
+                addLog('✅ Estado de orden cambiado por supervisor', { ordenId, oldStatus, newStatus: orden.estado }, 'success');
+            }
+        }
+
+        function toggleVisibilidad(ordenId) {
+            if (!supervisorAuthenticated) return;
+            
+            const orden = ordenes.find(o => o.id === ordenId);
+            if (!orden) return;
+            
+            const oldVisibilidad = orden.visibilidad;
+            orden.visibilidad = orden.visibilidad === 'en_lista' ? 'en_cola' : 'en_lista';
+            
+            saveOrdenes();
+            updateDashboard();
+            if (operarioAuthenticated) updateOrdenesDisponibles();
+            
+            const action = orden.visibilidad === 'en_lista' ? 'visible para operarios' : 'oculta para operarios';
+            showNotification(`✅ Orden ${orden.opl} ahora está ${action}`);
+            addLog('🔄 Visibilidad de orden cambiada', { 
+                ordenId, 
+                opl: orden.opl, 
+                oldVisibilidad, 
+                newVisibilidad: orden.visibilidad 
+            }, 'info');
+        }
+
+        function editOrden(ordenId) {
+            if (!supervisorAuthenticated) return;
+            
+            const orden = ordenes.find(o => o.id === ordenId);
+            if (!orden) {
+                showNotification('❌ Orden no encontrada', 'error');
+                return;
+            }
+            
+            // Rellenar formulario con datos actuales
+            document.getElementById('edit_maquina').value = orden.maquina;
+            document.getElementById('edit_opl').value = orden.opl;
+            document.getElementById('edit_proyecto').value = orden.proyecto;
+            document.getElementById('edit_lote').value = orden.lote;
+            document.getElementById('edit_pieza').value = orden.pieza;
+            document.getElementById('edit_cantidadTotal').value = orden.cantidadTotal;
+            document.getElementById('edit_visibilidad').value = orden.visibilidad;
+            document.getElementById('edit_estado').value = orden.estado;
+            
+            // Actualizar título del modal
+            document.getElementById('editOrdenTitle').textContent = `✏️ EDITAR ORDEN: ${orden.opl}`;
+            
+            // Mostrar modal
+            document.getElementById('editOrdenModal').style.display = 'flex';
+            
+            // Guardar ID de orden que se está editando
+            window.currentEditingOrdenId = ordenId;
+            
+            addLog('✏️ Modal de edición abierto', { ordenId, opl: orden.opl }, 'info');
+        }
+
+        function cerrarEditOrden() {
+            document.getElementById('editOrdenModal').style.display = 'none';
+            document.getElementById('editOrdenForm').reset();
+            window.currentEditingOrdenId = null;
+            addLog('❌ Modal de edición cerrado', null, 'info');
+        }
+
+        function deleteOrden(ordenId) {
+            if (!supervisorAuthenticated) return;
+            
+            const orden = ordenes.find(o => o.id === ordenId);
+            if (!orden) return;
+            
+            if (confirm(`⚠️ ¿Eliminar orden ${orden.opl}?\n\nEsta acción no se puede deshacer.`)) {
+                const index = ordenes.findIndex(o => o.id === ordenId);
+                if (index !== -1) {
+                    ordenes.splice(index, 1);
+                    saveOrdenes();
+                    updateDashboard();
+                    if (operarioAuthenticated) updateOrdenesDisponibles();
+                    showNotification('✅ Orden eliminada correctamente');
+                    addLog('🗑️ Orden eliminada', { ordenId, opl: orden.opl }, 'warning');
+                }
+            }
+        }
+
+        function resetData() {
+            if (confirm('⚠️ ¿Eliminar TODOS los datos?\n\nEsta acción no se puede deshacer.')) {
+                ordenes = [];
+                productions = [];
+                localStorage.removeItem('ordenes');
+                localStorage.removeItem('productions');
+                
+                // Recrear datos de ejemplo
+                ordenes = [
+                    {
+                        id: 1,
+                        maquina: 'Laser Chapa',
+                        opl: 'OPL251068',
+                        proyecto: 'PR230100-LE THOR',
+                        lote: 'L240815',
+                        pieza: '23095006-02',
+                        cantidadTotal: 2160,
+                        cantidadRealizada: 1890,
+                        estado: 'en-proceso',
+                        visibilidad: 'en_lista',
+                        fechaCreacion: new Date().toLocaleDateString()
+                    },
+                    {
+                        id: 2,
+                        maquina: 'Laser Tubo',
+                        opl: 'OPL251069',
+                        proyecto: 'PR230101-VULCANO',
+                        lote: 'L240816',
+                        pieza: '23095007-01',
+                        cantidadTotal: 1500,
+                        cantidadRealizada: 0,
+                        estado: 'pendiente',
+                        visibilidad: 'en_lista',
+                        fechaCreacion: new Date().toLocaleDateString()
+                    }
+                ];
+                
+                saveOrdenes();
+                updateDashboard();
+                updateOrdenesDisponibles();
+                showNotification('✅ Datos reseteados con ejemplos');
+                addLog('🔄 Sistema reseteado completamente', null, 'system');
+            }
+        }
+
+        // ESCUCHAR ENTER EN PINS
+        document.addEventListener('DOMContentLoaded', function() {
+            const supervisorPin = document.getElementById('supervisorPin');
+            const operarioPin = document.getElementById('operarioPin');
+            
+            if (supervisorPin) {
+                supervisorPin.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkSupervisorPin();
+                    }
+                });
+            }
+            
+            if (operarioPin) {
+                operarioPin.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        loginOperario();
+                    }
+                });
+            }
+        });
+
+        // INICIALIZACIÓN
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('📄 Sistema de Control de Producción iniciado', null, 'system');
+            setInterval(updateTime, 1000);
+            updateTime();
+            
+            // Verificar si hay sesión operario activa y actualizar vista
+            if (operarioAuthenticated) {
+                updateOrdenesDisponibles();
+            }
+            
+            setTimeout(() => {
+                updateLogsDisplay();
+                addLog('🎯 Sistema v3.3 completamente operativo - Sin Registro de Hora', {
+                    pinLaserTubo: '0000',
+                    pinLaserChapa: '1111',
+                    funcionesActualizadas: [
+                        'Login solo con máquina + PIN',
+                        'Dashboard "Sin Completar" destacado', 
+                        'Sin registro de hora de envío',
+                        'Solo fecha de creación/envío',
+                        'Backup CSV simplificado'
+                    ]
+                }, 'success');
+            }, 1000);
+        });
+
+        addLog('⚡ Inicializando Sistema de Control de Producción v3.3...', null, 'system');
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
 </body>
 </html>
